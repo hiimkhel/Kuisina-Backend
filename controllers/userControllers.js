@@ -89,7 +89,19 @@ const updateBmi = async (req, res) =>{
     }
 
 }
+const getUserProfile = async (req, res) =>{
+    const {userId} = req.params;
+    try{
+        const user = await User.findById(userId);
 
+        if(!user) return res.status(400).json({message: "User not found!"});
+
+        res.status(200).json(user);
+    }catch(err){
+        res.status(500).json({message: "Server Error: ", error: err.message});
+    }
+
+}
 const getBmi = async (req, res) =>{
     const {userId} = req.params;
     try{
@@ -113,4 +125,4 @@ const getBmi = async (req, res) =>{
    
 }
 
-module.exports = {loginUser, registerUser, updateUser, updateBmi, getBmi};
+module.exports = {loginUser, registerUser, updateUser, updateBmi, getBmi, getUserProfile};
